@@ -4,7 +4,7 @@
  * Pandemic Planner
  */
 
- import React, { useState } from 'react';
+ import React, { useEffect, useState } from 'react';
  import {
    Button,
    SafeAreaView,
@@ -55,25 +55,10 @@
     Verify();
   } 
 
-  const handleLotNumber = (lot:string) => {
-    setLotNumber(lot);
+  useEffect(()=> {
     Verify();
-  }
-
-  const handleManufacturer = (manufacturer:string) => {
-    setManufacturer(manufacturer);
-    Verify();
-  }
-
-  const handleDose = (dose:string) => {
-    setDose(dose);
-    Verify();
-  }
-
-  const handleDateAdministered = (date:string) => {
-    setDateAdministered(date);
-    Verify();
-  }
+  },[manufacturer,lotNumber,dose,dateAdministered]);
+  
 
   if(!qrGenerated) {
     return (
@@ -86,7 +71,7 @@
           style={styles.elementContainer}
           selectedValue={manufacturer}
           onValueChange={(val) =>
-            handleManufacturer(val)
+            setManufacturer(val)
           }>
           <Picker.Item label="Pfizer" value="pfizer" />
           <Picker.Item label="Moderna" value="moderna" />
@@ -99,7 +84,7 @@
           style={styles.input} 
           placeholder="Lot Number"
           defaultValue={''}
-          onChangeText={lotNumber => handleLotNumber(lotNumber)}
+          onChangeText={lotNumber => setLotNumber(lotNumber)}
         />
         <View style={styles.separator}/>
         <Text style={styles.header}>Date</Text>
@@ -107,11 +92,11 @@
           style={styles.input} 
           placeholder="MM/DD/YY"
           defaultValue={''}
-          onChangeText={dateAdministered => handleDateAdministered(dateAdministered)}
+          onChangeText={dateAdministered => setDateAdministered(dateAdministered)}
         />
         <View style={styles.separator}/>
         <Text style={styles.header}>Was this your first or second dose?</Text>
-        <RadioButton.Group onValueChange={newValue => handleDose(newValue)} value={dose}>
+        <RadioButton.Group onValueChange={newValue => setDose(newValue)} value={dose}>
           <View>
             <Text>First</Text>
             <RadioButton value="first" />
