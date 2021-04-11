@@ -30,13 +30,20 @@
   const [dateAdministered, setDateAdministered] = React.useState('');
   const [manufacturer,setManufacturer] = React.useState('pfizer');
   const [dose, setDose] = React.useState('');
+  const [submitDisabled, setButtonDisabled] = useState(true);
   
   const handleSubmitClick = (event: any) => {
-    if (VerifyInputs(manufacturer, lotNumber, dateAdministered, dose)) {
+    if (Verify()) {
         setQrCode(GenerateQRCode(manufacturer, lotNumber, dateAdministered, dose));
         setQRGenerated(true);
     }
   }  
+
+  const Verify = () => {
+    let verified:boolean = VerifyInputs(manufacturer, lotNumber, dateAdministered, dose)
+    setButtonDisabled(!verified)
+    return verified
+  }
 
   const handleResetClick = (event: any) => {
     setQRGenerated(false);
@@ -45,7 +52,28 @@
     setDateAdministered('');
     setManufacturer('pfizer');
     setDose('');
+    Verify();
   } 
+
+  const handleLotNumber = (lot:string) => {
+    setLotNumber(lot);
+    Verify();
+  }
+
+  const handleManufacturer = (manufacturer:string) => {
+    setManufacturer(manufacturer);
+    Verify();
+  }
+
+  const handleDose = (dose:string) => {
+    setDose(dose);
+    Verify();
+  }
+
+  const handleDateAdministered = (date:string) => {
+    setDateAdministered(date);
+    Verify();
+  }
 
   if(!qrGenerated) {
     return (
@@ -58,7 +86,7 @@
           style={styles.elementContainer}
           selectedValue={manufacturer}
           onValueChange={(val) =>
-            setManufacturer(val)
+            handleManufacturer(val)
           }>
           <Picker.Item label="Pfizer" value="pfizer" />
           <Picker.Item label="Moderna" value="moderna" />
@@ -71,7 +99,7 @@
           style={styles.input} 
           placeholder="Lot Number"
           defaultValue={''}
-          onChangeText={lotNumber => setLotNumber(lotNumber)}
+          onChangeText={lotNumber => handleLotNumber(lotNumber)}
         />
         <View style={styles.separator}/>
         <Text style={styles.header}>Date</Text>
@@ -79,11 +107,11 @@
           style={styles.input} 
           placeholder="MM/DD/YY"
           defaultValue={''}
-          onChangeText={dateAdministered => setDateAdministered(dateAdministered)}
+          onChangeText={dateAdministered => handleDateAdministered(dateAdministered)}
         />
         <View style={styles.separator}/>
         <Text style={styles.header}>Was this your first or second dose?</Text>
-        <RadioButton.Group onValueChange={newValue => setDose(newValue)} value={dose}>
+        <RadioButton.Group onValueChange={newValue => handleDose(newValue)} value={dose}>
           <View>
             <Text>First</Text>
             <RadioButton value="first" />
@@ -95,6 +123,7 @@
         </RadioButton.Group>
         <View style={styles.separator}/>
         <Button
+          disabled={submitDisabled}
           onPress={handleSubmitClick}
           title="Submit"
           color="#841584"
