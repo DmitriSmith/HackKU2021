@@ -7,13 +7,29 @@ Tested on Android only.
 This app pattern-matches the lot number and date received. **Different manufacturers have different lot number formats**.
 I've included the format to make it easier to test. 
 
-**Proper alerts haven't been implemented yet, so the app will refuse to generate a QR code without telling you it's an input issue.**
+**The 'Submit' button won't enable until all fields are valid. Proper alerts haven't been implemented yet, so the app will refuse to generate a QR code without telling you which input is causing the issue.**
 ```
 Pfizer: 6 characters, alphanumeric
 AstraZeneca: 6 characters, alphanumeric
 Moderna: 7 characters, alphanumeric
 Johnson & Johnson: 7 characters, alphanumeric
 ```
+# Build guide
+## Dependencies
+```
+@react-native-picker/picker
+react-native-paper
+react-native-qrcode-svg
+```
+Make sure you have Android Studio with a an Android Q emulator downloaded if you plan to perform software emulation.
+
+Once your emulator is running, launch Metro from the project directory using the following command:
+
+`npx react-native start`
+
+Then you can build the project for android from the root project directory in a seperate terminal using 
+
+`npx react-native run-android`
 
 ## Inspiration
 Recent news surrounding Covid  vaccine "passports" inspired the original purpose of this app, to incentivize receiving a covid vaccination by giving rewards in the form of coupons to local businesses. Using CVKey nearly daily for the last year was the inspiration for the QR elements of the app.
@@ -36,23 +52,4 @@ The next steps for PandemicPassport are as follows:
 5) Create a QR-scanning partner app
 6) Make it pretty
 7) Partner with local businesses to provide rewards
-
-# Build guide
-## Dependencies
-```
-@react-native-picker/picker
-react-native-paper
-react-native-qrcode-svg
-```
-Make sure you have Android Studio with a an Android Q emulator downloaded if you plan to perform software emulation.
-
-Once your emulator is running, launch Metro from the project directory using the following command:
-
-`npx react-native start`
-
-Then you can build the project for android from the root project directory in a seperate terminal using 
-
-`npx react-native run-android`
-
-
 
