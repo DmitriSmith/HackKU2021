@@ -1,48 +1,28 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
+ * Dmitri Smith 
+ * HackKU 2021
+ * Pandemic Planner
  */
 
  import React, { useState } from 'react';
  import {
    Button,
    SafeAreaView,
-   ScrollView,
-   StatusBar,
    StyleSheet,
    Text,
    TextInput,
-   useColorScheme,
    View,
    Dimensions,
  } from 'react-native';
 
  import {Picker} from '@react-native-picker/picker';
- import { RadioButton} from 'react-native-paper';
+ import {RadioButton} from 'react-native-paper';
  import QRCode from 'react-native-qrcode-svg';
-
- import {
-   Colors,
-   DebugInstructions,
-   Header,
-   LearnMoreLinks,
-   ReloadInstructions,
- } from 'react-native/Libraries/NewAppScreen';
 
  import VerifyInputs from './helpers/VerifyInput';
  import GenerateQRCode from './helpers/GenerateQRHelper'
 
  const App = () => {
-   const isDarkMode = useColorScheme() === 'dark';
-
-   const backgroundStyle = {
-     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-   };
 
   const [qrGenerated, setQRGenerated] = useState(false);
   const [qrCode, setQrCode] = useState('example text');
@@ -50,7 +30,6 @@
   const [dateAdministered, setDateAdministered] = React.useState('');
   const [manufacturer,setManufacturer] = React.useState('pfizer');
   const [dose, setDose] = React.useState('');
-
   
   const handleSubmitClick = (event: any) => {
     if (VerifyInputs(manufacturer, lotNumber, dateAdministered, dose)) {
